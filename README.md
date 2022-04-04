@@ -1,5 +1,17 @@
 # Gricd Books Frontend
 
+## Live Web URL
+[https://gricdbook-web-9h964.ondigitalocean.app](https://gricdbook-web-9h964.ondigitalocean.app)
+
+Admin Sign up
+[https://gricdbook-web-9h964.ondigitalocean.app/admin/register](https://gricdbook-web-9h964.ondigitalocean.app/admin/register)
+
+Admin Sign In
+[https://gricdbook-web-9h964.ondigitalocean.app/admin/login](https://gricdbook-web-9h964.ondigitalocean.app/admin/login)
+
+## Live API URL
+[https://gricdbook-api.herokuapp.com](https://gricdbook-api.herokuapp.com/)
+
 ## How to install
 
 Clone the repo:
@@ -7,6 +19,13 @@ Clone the repo:
 ```bash
 git clone https://github.com/evidenze/gricdbook-web.git
 cd gricdbook-web
+```
+Set the environment variables:
+
+```bash
+cp .env.example .env
+
+# open .env and modify the environment variables (if needed)
 ```
 
 Install the dependencies:
