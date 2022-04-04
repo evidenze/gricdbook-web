@@ -1,0 +1,32 @@
+{
+  "name": "lincapp",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@coders-tm/vue-number-format": "^2.1.0",
+    "@nuxtjs/auth-next": "5.0.0-1642152945.3bb6b5f",
+    "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/toast": "^3.3.1",
+    "core-js": "^3.9.1",
+    "flutterwave-vue-v3": "^1.0.5",
+    "jspdf": "^2.5.1",
+    "nuxt": "^2.15.3",
+    "pusher-js": "^7.0.6",
+    "v-idle": "^0.2.1",
+    "vue-js-modal": "^2.0.1",
+    "vue-ladda": "^0.0.15",
+    "vue-slick-carousel": "^1.0.6",
+    "vue-typeahead-bootstrap": "^2.12.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/dotenv": "^1.4.1",
+    "@nuxtjs/laravel-echo": "^1.1.0",
+    "@nuxtjs/moment": "^1.6.1"
+  }
+}
