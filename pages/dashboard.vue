@@ -2,9 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12 mr-auto ml-auto">
-         <div class="d-flex justify-content-between mt-3">
-        <p class="pb-3"><i @click="$nuxt.refresh()" class="bi-arrow-clockwise" style="font-size:20px;cursor:pointer"></i></p>
-        </div>
+
     <div v-if="$fetchState.pending" class="d-flex justify-content-center">
       <div class="spinner-border" role="status">
         <span class="sr-only">Loading...</span>
@@ -12,13 +10,13 @@
     </div>
     <p v-else-if="$fetchState.error">An error occurred :(</p>
     <div v-else>
-    <div class="mt-2">
+    <div class="mt-5">
       <div v-if="!books.length">
-      <p class="text-secondary text-center pt-5">No books yet</p>
-      <button class="btn btn-success" @click="showBookModal">Add book</button>
+      <p class="text-secondary text-center pt-5">No books yet</p><br>
+      <p class="text-center"><button class="btn btn-success" @click="showBookModal">Add book</button></p>
       </div>
 
-      <div v-else class="card shadow-sm">
+      <div v-else class="card shadow-sm mt-5">
         <p><button class="btn btn-success" @click="showBookModal">Add book</button></p>
         <div class="table-responsive mt-3">
           <table class="table">
@@ -98,8 +96,8 @@
                           <label>Category</label>
                          <select class="custom-select" required v-model="book.category">
                             <option selected value="">Choose category...</option>
-                            <option value="daily">General</option>
-                            <option value="weekly">Fiction</option>
+                            <option value="General">General</option>
+                            <option value="Fiction">Fiction</option>
                         </select>
                     </div>
                     </div>
@@ -127,9 +125,10 @@
 </template>
 
 <script>
+import * as Ladda from 'ladda';
+
   export default {
     layout: 'dashboard',
-    auth: 'guest',
       data() {
         return {
           books: [],
@@ -188,7 +187,7 @@
               this.$toast.error(e.response.data.errors[item]);
             }
           }
-          if(e.response.status == 400 || e.response.status == 500) {
+          if(e.response.status == 400 || e.response.status == 500 || e.response.status == 401) {
             this.$toast.error(e.response.data.message);
           }
         }

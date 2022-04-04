@@ -3,18 +3,16 @@
     <!-- <v-idle :duration="300" @idle="onidle" /> -->
     <div class="wrapper">
             <nav id="sidebar" class="sidebar shadow-sm">
-
+              <h4 class="text-center">Categories</h4>
                 <nav class="sidenav">
-                    <nuxt-link to="/"> <i class="bi-speedometer2 side"></i>&nbsp;&nbsp;&nbsp;&nbsp; Home</nuxt-link>
-                    <nuxt-link to="/dashboard"> <i class="bi-person side"></i>&nbsp;&nbsp;&nbsp;&nbsp; Profile</nuxt-link>
-                    <nuxt-link to="/savings/list"> <i class="bi-piggy-bank side"></i>&nbsp;&nbsp;&nbsp;&nbsp; Savings</nuxt-link>
-                    <nuxt-link to="/bills"> <i class="bi-receipt side"></i>&nbsp;&nbsp;&nbsp;&nbsp; Pay Bills</nuxt-link>
-                    <nuxt-link to="/withdrawals"> <i class="bi-bank side"></i>&nbsp;&nbsp;&nbsp;&nbsp; Transfers</nuxt-link>
-                    <nuxt-link @click.native="logout"  to="#"> <i class="bi-box-arrow-right side"></i>&nbsp;&nbsp;&nbsp;&nbsp; Logout</nuxt-link>
+                    <nuxt-link to="/"> General</nuxt-link>
+                    <nuxt-link v-if="this.$auth.loggedIn" to="/"> Homepage</nuxt-link>
+                    <nuxt-link v-if="this.$auth.loggedIn" to="/dashboard"> Dashboard</nuxt-link>
+                    <nuxt-link @click.native="logout" v-if="this.$auth.loggedIn"  to="#"> Logout</nuxt-link>
                 </nav>
             </nav>
             <div class="main shadow-sm">
-              <!-- <i @click="showSidebar" id="open-btn" class="open-btn navbar-brand bi-filter-left mb-3" style="font-size:30px"></i> -->
+              <i @click="showSidebar" id="open-btn" class="open-btn navbar-brand bi-filter-left mb-3" style="font-size:30px"></i>
               <Nuxt />
             </div>
         </div>

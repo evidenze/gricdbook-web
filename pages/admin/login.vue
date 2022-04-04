@@ -31,7 +31,7 @@
 							</div>
 						</div>
 
-              <p class="text-center pt-4">Don't an account? <nuxt-link class="font-weight-bold" to="/admin/login">
+              <p class="text-center pt-4">Don't an account? <nuxt-link class="font-weight-bold" to="/admin/register">
                             Sign Up
                         </nuxt-link></p>
 					</form>
@@ -80,7 +80,7 @@ import * as Ladda from 'ladda';
               this.$toast.error(e.response.data.errors[item]);
             }
           }
-          if(e.response.status == 500 || e.response.status == 400) {
+          if(e.response.status == 500 || e.response.status == 400 || e.response.status == 401) {
             this.$toast.error(e.response.data.message);
           }
         }

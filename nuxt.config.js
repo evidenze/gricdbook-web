@@ -62,7 +62,6 @@ export default {
     css: [
         '~/static/css/main.css',
         '~/static/css/ladda-themeless.min.css',
-        'vue-slick-carousel/dist/vue-slick-carousel.css'
     ],
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -111,7 +110,8 @@ export default {
             }
         },
         redirect: {
-            home: '/dashboard'
+            home: '/dashboard',
+            login: '/admin/login',
         },
         rewriteRedirects: false
     },
