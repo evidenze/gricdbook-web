@@ -2,8 +2,9 @@
         <div class="container mt-5 mb-5">
             <div class="row">
                 <div class="col-md-5 ml-auto mr-auto">
-                <h4 class="font-weight-bold pt-3" style="color: #002244;">Admin Signup</h4>
+                <h4 class="font-weight-bold pt-3" style="color: #002244;">Gricd Books</h4>
 
+                <p>Admin Sign Up</p><br>
 
                     <form @submit.prevent="submit">
 
@@ -44,7 +45,7 @@
                             </div>
                         </div>
 
-                        <p class="text-center pt-4">Already have an account? <nuxt-link class="font-weight-bold" to="/login">
+                        <p class="text-center pt-4">Already have an account? <nuxt-link class="font-weight-bold" to="/admin/login">
                             Sign in
                         </nuxt-link></p>
 
@@ -90,13 +91,13 @@ import * as Ladda from 'ladda';
           l.start();
           try {
           let response = await this.$axios.$post(this.$config.apiURL+'/v1/auth/register', {
-            name: this.form.firstname,
+            name: this.form.name,
             email: this.form.email,
             password: this.form.password,
           });
 
           if (response) {
-            let login = await this.$auth.loginWith('local', { data: this.form })
+            let login = await this.$auth.loginWith('local', { data: {email: this.form.email, password: this.form.password }})
             if(login) {
               this.$router.push('/dashboard');
             }

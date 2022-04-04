@@ -1,9 +1,10 @@
 <template>
 <div class="login_div">
-	<div class="container">
+	<div class="container add-margin">
 		<div class="row">
 			<div class="col-md-4 ml-auto mr-auto">
-					<h4 class="font-weight-bold pt-4">Admin login</h4><br>
+					<h4 class="font-weight-bold pt-4">Gricd Books</h4>
+          <p>Admin Login</p><br>
 
 					<form @submit.prevent="submit">
 						<div class="form-group row">
@@ -26,11 +27,13 @@
 
 						<div class="form-group row mb-0 mt-4">
 							<div class="col-md-12">
-								<button id="my-button" data-style="slide-right" type="submit" class="ladda-button btn btn-primary btn-block mb-3"> Login </button>
-
-								<nuxt-link class="btn reg_btn btn-block" to="/register">Create admin account </nuxt-link>
+								<button id="my-button" data-style="slide-right" type="submit" class="ladda-button btn sign_btn btn-block mb-3"> Login </button>
 							</div>
 						</div>
+
+              <p class="text-center pt-4">Don't an account? <nuxt-link class="font-weight-bold" to="/admin/login">
+                            Sign Up
+                        </nuxt-link></p>
 					</form>
 				</div>
 		</div>

@@ -106,7 +106,7 @@ export default {
                 endpoints: {
                     login: { url: process.env.API_URL + '/v1/auth/login', method: 'post' },
                     logout: false,
-                    user: { url: process.env.API_URL + '/v1/users/', method: 'get' }
+                    user: { url: process.env.API_URL + '/v1/user', method: 'get' }
                 }
             }
         },
