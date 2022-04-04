@@ -12,6 +12,13 @@ Admin Sign In
 ## Live API URL
 [https://gricdbook-api.herokuapp.com](https://gricdbook-api.herokuapp.com/)
 
+---
+**NOTE**
+
+Images are deleted from the server automatically after 5 minutes. This is because of the sandbox database being used for this test.
+
+---
+
 ## How to install
 
 Clone the repo:
