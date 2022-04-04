@@ -3,9 +3,8 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4 ml-auto mr-auto">
-					<h4 class="font-weight-bold pt-4" style="color: #002244;">Welcome back</h4>
-          <p class="text-secondary">Login to continue</p>
-          <img src="images/link.svg" class="mx-auto d-block mb-5 mt-5" style="width:60%">
+					<h4 class="font-weight-bold pt-4">Admin login</h4><br>
+
 					<form @submit.prevent="submit">
 						<div class="form-group row">
 							<div class="col-md-12">
@@ -24,13 +23,12 @@
                 </div>
               </div>
 						</div>
-            <nuxt-link to="/reset-password" class="auth font-weight-bold">Forgot your password?</nuxt-link>
 
 						<div class="form-group row mb-0 mt-4">
 							<div class="col-md-12">
-								<button id="my-button" data-style="slide-right" type="submit" class="ladda-button btn sign_btn btn-block mb-3"> Login </button>
+								<button id="my-button" data-style="slide-right" type="submit" class="ladda-button btn btn-primary btn-block mb-3"> Login </button>
 
-								<nuxt-link class="btn reg_btn btn-block" to="/register">Create new account </nuxt-link>
+								<nuxt-link class="btn reg_btn btn-block" to="/register">Create admin account </nuxt-link>
 							</div>
 						</div>
 					</form>
@@ -85,15 +83,6 @@ import * as Ladda from 'ladda';
         }
       }
     },
-    // computed: {
-    //   checkvar() {
-    //     if(this.form.email == "" || this.form.password == "") {
-    //       return true
-    //     } else {
-    //       return false
-    //     }
-    //   }
-    // }
   }
 </script>
 

@@ -1,257 +1,203 @@
 <template>
-<div>
-  <div v-if="$auth.user.account_type == 'Church'" class="mt-4">
-    <div class="container">
-      <h4 class="font-weight-bold m-0">Hi, {{ this.$auth.user.church_name }}</h4>
-      <small class="text-secondary">Welcome</small>
-
-      <div class="row mt-4">
-        <div class="col-md-3 mb-3 mb-lg-0">
-          <div class="card p-3 shadow-sm">
-            <p class="pb-2">Main Wallet Balance</p>
-            <h4>&#8358;{{ Intl.NumberFormat().format(this.$auth.user.wallet_balance) }}</h4>
-          </div>
-        </div>
-        <div class="col-md-3 mb-3 mb-lg-0">
-          <div class="card p-3 shadow-sm">
-            <p class="pb-2">Total Sub Wallets</p>
-            <h4>{{ wallets }}</h4>
-            <h4 v-if="$fetchState.pending">Loading...</h4>
-          </div>
-        </div>
-      </div>
-
-      <div class="mt-5 mb-5">
-      <div class="d-flex justify-content-between">
-      <p class="mb-3 font-weight-bold">Recent transactions</p>
-      <nuxt-link to="/transactions" class="font-weight-bold main-link">See all <i class="bi-arrow-right"></i></nuxt-link>
-      </div>
-      <div v-if="!transactions" class="card shadow-sm">
-      <p class="text-center">No transactions yet</p>
-      </div>
-
-      <div v-else class="card shadow-sm">
-      <div class="list-group list-group-flush p-0">
-        <a v-for="transaction in transactions" :key="transaction.id" href="#" class="list-group-item list-group-item-action">
-          <div class="d-flex w-100 justify-content-between">
-            <div class="d-flex">
-              <div class="mr-3 align-self-center">
-                <div v-if="transaction.type == 'Debit'" class="debit text-center">
-                  <i class="bi-arrow-up-right"></i>
-                </div>
-                <div v-else class="credit text-center">
-                  <i class="bi-arrow-down-left"></i>
-                </div>
-              </div>
-              <div>
-              <small class="font-weight-bold">{{ transaction.description }}</small><br>
-              <small class="text-secondary" v-text="$moment(transaction.created_at).format('llll')"></small>
-              </div>
-            </div>
-            <small v-if="transaction.type == 'Debit'" class="mb-1 font-weight-bold text-danger align-self-center">{{ transaction.currency == 'USD' ? '$': '&#8358;'}}{{ Intl.NumberFormat().format(transaction.amount) }}</small>
-            <small v-if="transaction.type == 'Credit'" class="mb-1 font-weight-bold text-success align-self-center">{{ transaction.currency == 'USD' ? '$': '&#8358;'}}{{ Intl.NumberFormat().format(transaction.amount) }}</small>
-          </div>
-        </a>
-      </div>
-      </div>
-    </div>
-    </div>
-  </div>
-
-  <div v-else>
-  <div class="bal_div p-4 p-lg-5">
-     <div class="d-flex justify-content-between mt-2">
-          <div>
-            <h4 class="font-weight-bold m-0">Hi, {{ this.$auth.user.firstname }} &#128522;</h4>
-            <small class="" style="color:#eaeaea">Welcome</small>
-          </div>
-          <div class="align-self-center">
-            <nuxt-link to="/profile">
-             <img v-if="$auth.user.profile_picture == null" src="/images/user.png" class="user-image d-block mx-auto">
-              <img v-else :src="`${ $config.apiURL }/storage/${$auth.user.profile_picture}`" class="user-image d-block mx-auto">
-            </nuxt-link>
-          </div>
-        </div>
-
-        <div class="text-center mt-5 mr-auto ml-auto pl-4 pr-4">
-          <VueSlickCarousel :arrows="true" :dots="true">
-            <div>
-              <p class="primary-white">Naira balance</p>
-              <div class="">
-                <div>
-                  <small class="font-weight-bold pt-2">&#8358;<span class="money-text">{{ Intl.NumberFormat().format(this.$auth.user.wallet_balance) }}</span> &nbsp;&nbsp;<i @click="$nuxt.refresh()" class="bi-arrow-clockwise" style="font-size:20px;cursor:pointer"></i></small>
-                </div>
-                <div class="mt-3">
-                  <nuxt-link class="btn fund-btn font-weight-bold mt-3" to="/fund-wallet">Fund</nuxt-link>&nbsp;
-                  <nuxt-link class="btn fund-btn font-weight-bold mt-3" to="/wallet">View</nuxt-link>
-                </div>
-              </div>
-              </div>
-              <div>
-              <p class="primary-white">Dollar balance</p>
-              <div class="">
-                <div>
-                  <small class="font-weight-bold pt-2">&#36;<span class="money-text">{{ Intl.NumberFormat().format(this.$auth.user.dollar_balance) }}</span></small>
-                </div>
-                <div class="mt-3">
-                  <nuxt-link class="btn fund-btn font-weight-bold mt-3" to="/fund-dollar-wallet">Fund</nuxt-link>&nbsp;
-                  <nuxt-link class="btn fund-btn font-weight-bold mt-3" to="/wallet">View</nuxt-link>
-                </div>
-              </div>
-              </div>
-            </VueSlickCarousel>
-        </div>
-  </div>
   <div class="container">
     <div class="row">
-      <div class="col-md-6 mr-auto ml-auto">
-
-        <div v-if="$auth.user.address == null" class="alert alert-warning text-center">
-          Please complete your account info. <nuxt-link class="font-weight-bold" to="/profile">Click here</nuxt-link>
+      <div class="col-md-12 mr-auto ml-auto">
+         <div class="d-flex justify-content-between mt-3">
+        <p class="pb-3"><i @click="$nuxt.refresh()" class="bi-arrow-clockwise" style="font-size:20px;cursor:pointer"></i></p>
         </div>
-        <!-- <div class="d-flex justify-content-between mt-4">
-          <div>
-            <h4 class="font-weight-bold m-0">Hi, {{ this.$auth.user.firstname }} &#128522;</h4>
-            <small class="text-secondary">ID: {{ this.$auth.user.phone_number }}</small>
-          </div>
-          <div class="align-self-center">
-            <nuxt-link to="/profile">
-             <img v-if="$auth.user.profile_picture == null" src="/images/user.png" class="user-image d-block mx-auto">
-              <img v-else :src="`${ $config.apiURL }/storage/${$auth.user.profile_picture}`" class="user-image d-block mx-auto">
-            </nuxt-link>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12 text-center">
-            <div class="balance_div p-4 p-lg-5 mt-2">
-              <p class="primary-white">Wallet balance</p>
-              <div class="">
-                <div>
-                  <small class="font-weight-bold pt-2">&#8358;<span class="money-text">{{ Intl.NumberFormat().format(+this.$auth.user.wallet_balance + +this.$auth.user.virtual_balance) }}</span></small>
-                </div>
-                <div>
-                  <nuxt-link class="btn fund-btn font-weight-bold mt-3" to="wallet">View</nuxt-link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
-
-    <div class="mt-3 mt-lg-5 mb-3">
-    <div class="row">
-        <div class="col-6 mb-3">
-            <nuxt-link to="/savings/list" class="main-link">
-            <div class="card payout-card p-3 p-lg-4 h-100">
-                <i class="bi-piggy-bank" style="color: #ffc837;font-size:30px;"></i>
-                <p class="font-weight-bold pt-3 dark-text">Savings</p>
-                <p class="second-text text-secondary">Create a regular or fixed savings plan.</p>
-            </div>
-            </nuxt-link>
-        </div>
-        <div class="col-6 mb-3">
-            <nuxt-link to="savings/ajo" class="main-link">
-            <div class="card airtime-card p-3 p-lg-4 h-100">
-                <i class="bi-people" style="color: #06B6D4;font-size:30px;"></i>
-                <p class="font-weight-bold pt-3 dark-text">Ajo</p>
-                <p class="second-text text-secondary">Create or join an active Ajo savings.</p>
-            </div>
-            </nuxt-link>
-        </div>
-    </div>
-
-    <div class="row mt-2">
-        <div class="col-6 mb-3">
-            <nuxt-link to="/cards" class="main-link">
-            <div class="card data-card p-3 p-lg-4 h-100">
-                <i class="bi-card-checklist" style="color: #4ADE80;font-size:30px;"></i>
-                <p class="font-weight-bold pt-3 dark-text">Virtual Cards</p>
-                <p class="second-text text-secondary">Create virtual cards for your online transactions.</p>
-            </div>
-            </nuxt-link>
-        </div>
-        <div class="col-6 mb-3">
-            <nuxt-link to="bills" class="main-link">
-            <div class="card bills-card p-3 p-lg-4 h-100">
-                <i class="bi-receipt" style="color: #ff784b;font-size:30px;"></i>
-                <p class="font-weight-bold pt-3 dark-text">Pay Bills</p>
-                <p class="second-text text-secondary">Pay your Cable TV, electricity and data bills.</p>
-            </div>
-            </nuxt-link>
-        </div>
+    <div v-if="$fetchState.pending" class="d-flex justify-content-center">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
     </div>
     </div>
-
-    <div class="mt-3 mb-5">
-      <div class="d-flex justify-content-between">
-      <p class="mb-3 font-weight-bold">Recent transactions</p>
-      <nuxt-link to="/transactions" class="font-weight-bold main-link">See all <i class="bi-arrow-right"></i></nuxt-link>
-      </div>
-      <div v-if="!transactions" class="card shadow-sm">
-      <p class="text-center">No transactions yet</p>
+    <p v-else-if="$fetchState.error">An error occurred :(</p>
+    <div v-else>
+    <div class="mt-2">
+      <div v-if="!books.length">
+      <p class="text-secondary text-center pt-5">No books yet</p>
+      <button class="btn btn-success" @click="showBookModal">Add book</button>
       </div>
 
       <div v-else class="card shadow-sm">
-      <div class="list-group list-group-flush p-0">
-        <a v-for="transaction in transactions" :key="transaction.id" href="#" class="list-group-item list-group-item-action">
-          <div class="d-flex w-100 justify-content-between">
-            <div class="d-flex">
-              <div class="mr-3 align-self-center">
-                <div v-if="transaction.type == 'Debit'" class="debit text-center">
-                  <i class="bi-arrow-up-right"></i>
-                </div>
-                <div v-else class="credit text-center">
-                  <i class="bi-arrow-down-left"></i>
-                </div>
-              </div>
-              <div>
-              <small class="font-weight-bold">{{ transaction.description }}</small><br>
-              <small class="text-secondary" v-text="$moment(transaction.created_at).format('llll')"></small>
-              </div>
-            </div>
-            <small v-if="transaction.type == 'Debit'" class="mb-1 font-weight-bold text-danger align-self-center">{{ transaction.currency == 'USD' ? '$': '&#8358;'}}{{ Intl.NumberFormat().format(transaction.amount) }}</small>
-            <small v-if="transaction.type == 'Credit'" class="mb-1 font-weight-bold text-success align-self-center">{{ transaction.currency == 'USD' ? '$': '&#8358;'}}{{ Intl.NumberFormat().format(transaction.amount) }}</small>
-          </div>
-        </a>
+        <p><button class="btn btn-success" @click="showBookModal">Add book</button></p>
+        <div class="table-responsive mt-3">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Published</th>
+                <th scope="col">Author</th>
+                <th scope="col">Publisher</th>
+                <th scope="col">ISBN</th>
+                <th scope="col">Category</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="book in books" :key="book.id">
+                <td>{{ book.title }}</td>
+                <td>{{ book.published }}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.publisher }}</td>
+                <td>{{ book.isbn }}</td>
+                <td>{{ book.category }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      </div>
+
+      <modal name="book-modal" height="auto" :scrollable="true" :shiftY="1.0">
+                <div class="container p-4">
+
+                  <p class="font-weight-bold pb-3 pt-3">Add new book</p>
+                    <form @submit.prevent="submit">
+                      <div class="form-group row">
+                      <div class="col-md-12">
+                        <label>Title</label>
+                        <input type="text" v-model="book.title" class="auth-input form-control" required autocomplete="off">
+                    </div>
+                    </div>
+
+                     <div class="form-group row">
+                      <div class="col-md-12">
+                        <label>Author</label>
+                        <input type="text" v-model="book.author" class="auth-input form-control" required autocomplete="off">
+                    </div>
+                    </div>
+
+                     <div class="form-group row">
+                      <div class="col-md-12">
+                        <label>Publisher</label>
+                        <input type="text" v-model="book.publisher" class="auth-input form-control" required autocomplete="off">
+                    </div>
+                    </div>
+
+                     <div class="form-group row">
+                      <div class="col-md-12">
+                        <label>Year Published</label>
+                        <input type="number" v-model="book.published" class="auth-input form-control" required autocomplete="off">
+                    </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <label>Short Description</label>
+                        <textarea role="5" type="text" v-model="book.description" class="auth-input form-control" required autocomplete="off"></textarea>
+                    </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <label>ISBN</label>
+                        <input type="text" v-model="book.isbn" class="auth-input form-control" required autocomplete="off">
+                    </div>
+                    </div>
+
+                     <div class="form-group row">
+                      <div class="col-md-12">
+                          <label>Category</label>
+                         <select class="custom-select" required v-model="book.category">
+                            <option selected value="">Choose category...</option>
+                            <option value="daily">General</option>
+                            <option value="weekly">Fiction</option>
+                        </select>
+                    </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-md-12">
+                        <label>Book cover</label>
+                        <input ref="image" @change="uploadImage" type="file" class="auth-input form-control" required autocomplete="off">
+                    </div>
+                    </div>
+
+                    <div class="form-group row mb-0 mt-3">
+                      <div class="col-md-12">
+                        <button id="submit-button" data-style="slide-right" type="submit" class="ladda-button btn btn-dark btn-block">Submit</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+            </modal>
+    </div>
     </div>
   </div>
     </div>
   </div>
-  </div>
-</div>
 </template>
 
 <script>
-
   export default {
-  layout: 'dashboard',
-
-    data() {
-      return {
-        books: [],
-      }
+    layout: 'dashboard',
+    auth: 'guest',
+      data() {
+        return {
+          books: [],
+          book: {
+            title: '',
+            description: '',
+            published: '',
+            publisher: '',
+            category: '',
+            author: '',
+            image: '',
+            isbn: '',
+          }
+        }
     },
 
-  async fetch() {
-      let books = await this.$axios.get(`${this.$config.apiURL}/books`);
-      this.books = books.data.data;
-      await this.$auth.fetchUser();
-  },
+    async fetch() {
+      let books = await this.$axios.get(this.$config.apiURL+'/v1/books');
+      this.books = books.data.data.results;
+    },
 
-  methods: {
-    async logout() {
+      methods: {
+        showBookModal() {
+          this.$modal.show('book-modal');
+        },
 
-      try {
-        await this.$auth.logout();
-        this.$router.push('/login')
-      } catch (error) {
-        console.log(error);
+         uploadImage() {
+        this.book.image = this.$refs.image.files[0];
+      },
+
+       async submit() {
+        const formData = new FormData();
+        formData.append('image', this.book.image);
+        formData.append('publisher', this.book.publisher);
+        formData.append('category', this.book.category);
+        formData.append('isbn', this.book.isbn);
+        formData.append('author', this.book.author);
+        formData.append('description', this.book.description);
+        formData.append('title', this.book.title);
+        formData.append('published', this.book.published);
+
+        var l = Ladda.create(document.querySelector('#submit-button'));
+          l.start();
+          try {
+          let response = await this.$axios.$post(this.$config.apiURL+'/v1/books', formData);
+            if (response) {
+              l.stop();
+              this.$toast.success(response.message);
+              this.$modal.hide('book-modal');
+              this.$nuxt.refresh();
+            }
+        } catch (e) {
+          l.stop();
+          if(e.response.status == 422) {
+            for (let item in e.response.data.errors) {
+              this.$toast.error(e.response.data.errors[item]);
+            }
+          }
+          if(e.response.status == 400 || e.response.status == 500) {
+            this.$toast.error(e.response.data.message);
+          }
+        }
+      },
+
       }
-    }
-  }
 }
 </script>
 
 <style scoped>
+
 </style>

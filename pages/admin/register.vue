@@ -89,7 +89,7 @@ import * as Ladda from 'ladda';
           var l = Ladda.create(document.querySelector('#my-button'));
           l.start();
           try {
-          let response = await this.$axios.$post(this.$config.apiURL+'/auth/register', {
+          let response = await this.$axios.$post(this.$config.apiURL+'/v1/auth/register', {
             name: this.form.firstname,
             email: this.form.email,
             password: this.form.password,
